@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Task 一覧
      */
     public function index()
     {
-        //
+        return Task::orderByDesc('id')->get();
     }
 
     /**
@@ -21,23 +22,25 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return Task::all();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Post.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(TaskRequest $request)
     {
-        //
+        $task = Task::create($request->all());
+        return $task
+            ?response()->json($task,201)
+            :reponse()->json([],500);
     }
-
     /**
      * Display the specified resource.
      */
     public function show(Task $task)
     {
-        //
+        return Task::all();
     }
 
     /**
@@ -45,22 +48,25 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return Task::all();
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        $task->title = $request->title;
+        return $task->update()
+            ?response()->json($task)
+            :reponse()->json([],500);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        Task::where('id',$id)->delete();
     }
 }

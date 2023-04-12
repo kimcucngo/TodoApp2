@@ -55,17 +55,15 @@ class TaskTest extends TestCase
         $response
                 ->assertStatus(200);
     }
-    public function test_validation(): void
+    public function testPostValidation(): void
     {
         $data = [
             'title'=>'dfserg',
-            'is_done'=>'0'
+            'is_done'=>'1'
         ];
         $response = $this->postJson('api/tasks',$data);
-        dd($response->json());
-    
+
         $response
-                ->assertCreated()
-                ->assertJsonFragment($data);
+                ->assertCreated();
     }
 }

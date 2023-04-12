@@ -23,7 +23,7 @@ class TaskRequest extends FormRequest
     { 
         return [
             'title' => 'required|max:255|min:6',
-            'is_done' => 'required',
+            'is_done' => '',
         ];
     }
 }
